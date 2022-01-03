@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/defaultTemplate">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <table style="width: 50%">
+        <thead>
+        <tr>
+            <th style="text-align: center">User Id</th>
+            <th style="text-align: center">Username</th>
+            <th style="text-align: center">Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${users.empty}">
+            <td style="text-align: center" colspan="4">No Orders Available</td>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td style="text-align: center"><h5 th:text="${user.id}">00000001</h5></td>
+            <td style="text-align: center"><h5 th:text="${user.username}">User 1</h5></td>
+            <td style="text-align: center"><h5 th:text="${user.password}">Password</h5></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div layout:fragment="footer"></div>
+</body>
+</html>
