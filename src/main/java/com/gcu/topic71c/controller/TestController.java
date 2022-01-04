@@ -2,6 +2,10 @@ package com.gcu.topic71c.controller;
 
 import com.gcu.topic71c.model.OrderModel;
 import com.gcu.topic71c.model.UserModel;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,9 @@ import java.util.List;
 @RequestMapping("/app")
 public class TestController {
 
+    @Autowired
+    EurekaClient client;
+
     @GetMapping("/")
     public String home(Model model){
         model.addAttribute("title", "Demo Microservices Application");
@@ -26,8 +33,10 @@ public class TestController {
 
     @GetMapping("/getUsers")
     public String getUsers(Model model){
-        String hostname = "localhost";
-        int port = 8081;
+        Application application = client.getApplication("user-service");
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String hostname = instanceInfo.getHostName();
+        int port = instanceInfo.getPort();
 
         String url = "http://" + hostname + ":" + port + "/service/users";
         RestTemplate restTemplate = new RestTemplate();
@@ -41,8 +50,10 @@ public class TestController {
 
     @GetMapping("/getOrders")
     public String getOrders(Model model){
-        String hostname = "localhost";
-        int port = 8082;
+        Application application = client.getApplication("order-service");
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String hostname = instanceInfo.getHostName();
+        int port = instanceInfo.getPort();
 
         String url = "http://" + hostname + ":" + port + "/service/orders";
         RestTemplate restTemplate = new RestTemplate();
